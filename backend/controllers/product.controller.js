@@ -26,7 +26,9 @@ module.exports.setProduct = async (req, res) => {
     res.status(400).json({ message: "Need to add a stock" });
   }
 
-  const imagePath = req.file ? req.file.path : null;
+  const imagePath = req.file
+    ? req.file.path.split("\\").slice(1).join("\\")
+    : null;
 
   const product = await ProductModel.create({
     title: req.body.title,

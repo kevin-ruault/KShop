@@ -72,11 +72,11 @@ function Product() {
   if (!product) {
     return <div>Loading...</div>;
   }
-
+  console.log(__dirname)
   return (
     <div className="product-card" key={product._id} style={styles.container}>
       <div className="product-image" style={styles.imageContainer}>
-        <img src={`http://localhost:5000${product.imagePath}`} alt={product.title} style={styles.image} />
+        <img src={`http://localhost:5000/${product.imagePath}`} alt={product.title} style={styles.image} />
       </div>
       <div className="product-details" style={styles.details}>
         <h2>{product.title}</h2>
