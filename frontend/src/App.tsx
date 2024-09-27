@@ -3,6 +3,8 @@ import { Products } from './components/Products';
 import { Product } from './components/Product';
 import { PageError } from './components/PageError';
 import { Root } from './components/Root';
+import { Admin } from './components/Admin';
+
 import './App.scss';
 
 const router = createBrowserRouter([
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'admin',
-        element: <div>Admin</div>,
+        element: <Admin />,
       }
     ]
   }
