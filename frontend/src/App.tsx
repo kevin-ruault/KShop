@@ -45,7 +45,7 @@ function Products() {
     <ul>
       {data.map((product) => (
         <li key={product.id}>
-          <NavLink to={product.id}>{product.title}</NavLink>
+          <NavLink to={product._id}>{product.title}</NavLink>
         </li>
       ))}
     </ul>
@@ -61,7 +61,6 @@ function Single() {
 
 function PageError() {
   const error = useRouteError()
-  console.log(error)
   return <>
     <h1> Une erreur est survenue </h1>
   </>
