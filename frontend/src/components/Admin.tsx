@@ -7,12 +7,11 @@ export function Admin() {
   const [price, setPrice] = useState(0)
   const [stock, setStock] = useState(0)
   const [image, setImage] = useState<File | null>(null);
-
+  const [preview, setPreview] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Vérifie que l'image est sélectionnée
     if (!image) {
       alert('Please upload an image.');
       return;
@@ -23,11 +22,11 @@ export function Admin() {
       description,
       price,
       stock,
-      image, // Fichier sélectionné
+      image,
     };
 
     try {
-      await createProduct(formData); // Envoie les données du produit et l'image au serveur
+      await createProduct(formData);
       alert('Product created successfully!');
     } catch (error) {
       console.error('Error creating product:', error);
@@ -36,7 +35,9 @@ export function Admin() {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setImage(e.target.files[0]);
+      const file = e.target.files[0];
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
     }
   };
 
@@ -60,9 +61,18 @@ export function Admin() {
           Prix :
           <input pattern="[0-9]*" value={stock} onChange={(e) => setStock(Number(e.target.value))} />
         </label>
-        <label>Upload Image:
+        <label>
+          Image:
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
+
+        {preview && (
+          <div>
+            <p>Prévisualisation de l'image:</p>
+            <img src={preview} alt="Preview" style={{ width: '200px', height: 'auto' }} />
+          </div>
+        )}
+
         <input type="submit" value="Créer" />
       </form>
     </div>
