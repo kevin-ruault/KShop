@@ -7,6 +7,10 @@ export function Product() {
   const [product, setProduct] = useState<ProductType>();
   const { id } = useParams();
 
+  function handleCartClick() {
+    console.log("ajouter au panier")
+  }
+
   useEffect(() => {
     const fetchProduct = async () => {
       if (id) {
@@ -32,6 +36,7 @@ export function Product() {
         <p>{product.description}</p>
         <p><strong>Price:</strong> ${product.price}</p>
         <p><strong>Stock:</strong> {product.stock} items left</p>
+        <button onClick={handleCartClick}>Ajouter au panier</button>
       </div>
     </div>
   );
