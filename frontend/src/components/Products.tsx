@@ -1,21 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { ProductType } from "../typescript/ProductType";
-import { getProducts } from "../api/ProductsAPI";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { ProductsContext } from "../context/ProductsContext";
 
 export function Products() {
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const contextValue = useContext(ProductsContext)
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productsData = await getProducts();
-      setProducts(productsData);
-    };
-
-    fetchProducts();
-  }, []);
+  const { products, setProducts } = useContext(ProductsContext)
 
   return (
     <ul>

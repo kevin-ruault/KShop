@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { createProduct } from "../api/ProductsAPI"
+import { useNavigate } from "react-router-dom"
 
 export function CreateProduct() {
   const [title, setTitle] = useState("")
@@ -8,6 +9,7 @@ export function CreateProduct() {
   const [stock, setStock] = useState(0)
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ export function CreateProduct() {
 
     try {
       await createProduct(formData);
-      alert('Product created successfully!');
+      navigate("/admin");
     } catch (error) {
       console.error('Error creating product:', error);
     }

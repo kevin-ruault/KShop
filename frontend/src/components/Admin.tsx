@@ -1,16 +1,27 @@
-import { useContext } from "react";
-import { deleteProduct } from "../api/ProductsAPI";
-import { NavLink } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { deleteProduct, getProducts } from "../api/ProductsAPI";
+import { NavLink, useLocation } from "react-router-dom";
 import { ProductsContext } from "../context/ProductsContext";
 
 export function Admin() {
-  const { products, setProducts } = useContext(ProductsContext)
+  const { products, setProducts } = useContext(ProductsContext);
+  const location = useLocation();
+
 
   function handleDelete(id: string) {
     deleteProduct(id).then(() => {
       setProducts((prevProducts) => prevProducts.filter(product => product._id !== id));
     });
   }
+
+  useEffect(() => {
+    const fetchUpdatedProducts = async () => {
+      const productsData = await getProducts();
+      setProducts(productsData);
+    };
+
+    fetchUpdatedProducts();
+  }, [location.pathname, setProducts]);
 
   return (
     <div>
