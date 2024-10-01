@@ -1,7 +1,8 @@
 import { useContext, useEffect } from "react";
-import { deleteProduct, getProducts } from "../api/ProductsAPI";
+import { deleteProduct } from "../api/ProductsAPI";
 import { NavLink, useLocation } from "react-router-dom";
 import { ProductsContext } from "../context/ProductsContext";
+import { fetchUpdatedProducts } from "../utils/ProductUtils";
 
 export function Admin() {
   const { products, setProducts } = useContext(ProductsContext);
@@ -15,12 +16,7 @@ export function Admin() {
   }
 
   useEffect(() => {
-    const fetchUpdatedProducts = async () => {
-      const productsData = await getProducts();
-      setProducts(productsData);
-    };
-
-    fetchUpdatedProducts();
+    fetchUpdatedProducts(setProducts)
   }, [location.pathname, setProducts]);
 
   return (
