@@ -41,7 +41,6 @@ module.exports.setProduct = async (req, res) => {
 module.exports.editProduct = async (req, res) => {
   try {
     const product = await ProductModel.findById(req.params.id);
-    console.log(req.params);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
