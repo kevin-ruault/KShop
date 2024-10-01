@@ -12,6 +12,14 @@ export type CreateProductType = {
   description: string;
   price: number;
   stock: number;
+  image: File;
+};
+
+export type UpdateProductType = {
+  title: string;
+  description: string;
+  price: number;
+  stock: number;
   image?: File | null;
 };
 

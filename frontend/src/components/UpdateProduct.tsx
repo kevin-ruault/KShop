@@ -1,8 +1,11 @@
-import { useState } from "react"
-import { createProduct } from "../api/ProductsAPI"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { ProductType } from "../typescript/ProductType";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProduct, updateProduct } from "../api/ProductsAPI";
 
-export function CreateProduct() {
+export function UpdateProduct() {
+  const [product, setProduct] = useState<ProductType>();
+  const { id } = useParams();
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState(0)
@@ -14,24 +17,26 @@ export function CreateProduct() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!image) {
-      alert('Please upload an image.');
-      return;
-    }
-
-    const formData = {
+    const formData: any = {
       title,
       description,
       price,
       stock,
-      image,
     };
 
+    if (image) {
+      formData.image = image;
+    }
+
     try {
-      await createProduct(formData);
-      navigate("/admin");
+      if (id) {
+        await updateProduct(formData, id);
+        navigate("/admin");
+      } else {
+        console.error("Product ID is undefined");
+      }
     } catch (error) {
-      console.error('Error creating product:', error);
+      console.error('Error updating product:', error);
     }
   };
 
@@ -42,6 +47,29 @@ export function CreateProduct() {
       setPreview(URL.createObjectURL(file));
     }
   };
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id) {
+        const productData = await getProduct(id);
+        setProduct(productData);
+
+        if (productData) {
+          setTitle(productData.title);
+          setDescription(productData.description);
+          setPrice(productData.price);
+          setStock(productData.stock);
+          setPreview(productData.imagePath ? `http://localhost:5000/${productData.imagePath}` : null);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="admin-container">
@@ -65,7 +93,7 @@ export function CreateProduct() {
         </label>
         <label>
           Image:
-          <input type="file" accept="image/*" onChange={handleImageChange} required={true} />
+          <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
 
         {preview && (
@@ -75,8 +103,9 @@ export function CreateProduct() {
           </div>
         )}
 
-        <input type="submit" value="Créer" />
+        <input type="submit" value="Modifier" />
       </form>
     </div>
   )
 }
+

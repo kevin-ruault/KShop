@@ -9,7 +9,7 @@ export function Admin() {
   const location = useLocation();
 
 
-  function handleDelete(id: string) {
+  function handleDelete(id: String) {
     deleteProduct(id).then(() => {
       setProducts((prevProducts) => prevProducts.filter(product => product._id !== id));
     });
@@ -27,7 +27,11 @@ export function Admin() {
       <ul>
         {products.map((product) => (
           <li key={product._id} style={{ display: "flex", gap: "50px", alignItems: "center" }}>
-            <p>{product.title}</p><p>{product.price}€</p><p>{product.stock}</p><NavLink to={product._id}>Modifier</NavLink><button onClick={() => handleDelete(product._id)}>Supprimer</button>
+            <p>{product.title}</p>
+            <p>{product.price}€</p>
+            <p>{product.stock}</p>
+            <NavLink to={product._id}>Modifier</NavLink>
+            <button onClick={() => handleDelete(product._id)}>Supprimer</button>
           </li>
         ))}
       </ul>

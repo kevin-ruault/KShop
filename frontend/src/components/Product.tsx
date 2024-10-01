@@ -21,7 +21,7 @@ export function Product() {
   if (!product) {
     return <div>Loading...</div>;
   }
-  console.log(__dirname)
+
   return (
     <div className="product-card" key={product._id} style={styles.container}>
       <div className="product-image" style={styles.imageContainer}>

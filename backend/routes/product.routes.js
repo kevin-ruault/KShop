@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/", getProducts);
 router.get("/:id", getProduct);
 router.post("/", upload.single("image"), setProduct);
-router.put("/:id", editProduct);
+router.put("/:id", upload.single("image"), editProduct);
 router.delete("/:id", deleteProduct);
 
 module.exports = router;

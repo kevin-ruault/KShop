@@ -8,6 +8,7 @@ import { Admin } from './components/Admin';
 import { ProductsContextProvider } from './context/ProductsContext';
 
 import './App.scss';
+import { UpdateProduct } from './components/UpdateProduct';
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: <>modification du produit</>
+            element: <UpdateProduct />
           }
         ]
       }

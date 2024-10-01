@@ -1,5 +1,9 @@
 import axios from "axios";
-import { CreateProductType, ProductType } from "../typescript/ProductType";
+import {
+  CreateProductType,
+  ProductType,
+  UpdateProductType,
+} from "../typescript/ProductType";
 
 export async function getProducts(): Promise<ProductType[]> {
   try {
@@ -31,32 +35,60 @@ export async function createProduct(form: CreateProductType) {
   try {
     const formData = new FormData();
 
-    // Ajouter les champs au FormData
     formData.append("title", form.title);
     formData.append("description", form.description);
     formData.append("price", form.price.toString());
     formData.append("stock", form.stock.toString());
 
-    // Ajouter le fichier image si présent
     if (form.image) {
-      formData.append("image", form.image); // L'image doit être un fichier Blob/File
+      formData.append("image", form.image);
     }
 
-    // Envoi de la requête POST avec les données du formulaire
     const response = await axios.post(
       "http://localhost:5000/product/",
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data", // Nécessaire pour envoyer des fichiers
+          "Content-Type": "multipart/form-data",
         },
       }
     );
 
-    return response.data; // Retourne la réponse si nécessaire
+    return response.data;
   } catch (error) {
     console.error("Error creating product:", error);
-    throw error; // Lance l'erreur pour qu'elle puisse être attrapée ailleurs
+    throw error;
+  }
+}
+
+export async function updateProduct(form: UpdateProductType, id: string) {
+  console.log(id, form);
+  try {
+    const formData = new FormData();
+
+    formData.append("title", form.title);
+    formData.append("description", form.description);
+    formData.append("price", form.price.toString());
+    formData.append("stock", form.stock.toString());
+
+    if (form.image) {
+      formData.append("image", form.image);
+    }
+
+    const response = await axios.put(
+      `http://localhost:5000/product/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw error;
   }
 }
 
