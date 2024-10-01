@@ -59,3 +59,12 @@ export async function createProduct(form: CreateProductType) {
     throw error; // Lance l'erreur pour qu'elle puisse être attrapée ailleurs
   }
 }
+
+export async function deleteProduct(id: String) {
+  try {
+    await axios.delete("http://localhost:5000/product/" + id);
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
+  }
+}

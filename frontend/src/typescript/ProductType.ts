@@ -14,3 +14,8 @@ export type CreateProductType = {
   stock: number;
   image?: File | null;
 };
+
+export type ProductsContextType = {
+  products: ProductType[];
+  setProducts: React.Dispatch<React.SetStateAction<ProductType[]>>;
+};
