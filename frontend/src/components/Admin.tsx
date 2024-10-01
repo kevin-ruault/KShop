@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { deleteProduct } from "../api/ProductsAPI";
-import { ProductType } from "../typescript/ProductType";
 import { NavLink } from "react-router-dom";
 import { ProductsContext } from "../context/ProductsContext";
 

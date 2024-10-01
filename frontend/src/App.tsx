@@ -4,13 +4,10 @@ import { Product } from './components/Product';
 import { PageError } from './components/PageError';
 import { Root } from './components/Root';
 import { CreateProduct } from './components/CreateProduct';
-import Admin from './components/Admin';
+import { Admin } from './components/Admin';
+import { ProductsContextProvider } from './context/ProductsContext';
 
 import './App.scss';
-import { getProducts } from './api/ProductsAPI';
-import { useEffect, useState } from 'react';
-import { ProductType } from './typescript/ProductType';
-import { ProductsContextProvider } from './context/ProductsContext';
 
 const router = createBrowserRouter([
   {
