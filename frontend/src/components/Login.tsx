@@ -1,12 +1,19 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
 import { createUser, logUser } from "../api/UserAPI"
+
+type LoginResponse = {
+  userId?: string;
+  token?: string;
+  message?: string;
+};
 
 export function Login() {
   const [firstname, setFirstname] = useState("")
   const [lastname, setLastname] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [response, setResponse] = useState<LoginResponse>();
   const navigate = useNavigate();
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -36,13 +43,23 @@ export function Login() {
     };
 
     try {
-      await logUser(formData);
-      //navigate("/admin");
+      const res = await logUser(formData);
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("userId", res.userId);
+      }
+      setResponse(res);
+      navigate("/");
+      window.location.reload();
     } catch (error) {
-      console.error('Error creating product:', error);
+      setResponse({ message: "Mail ou mot de passe incorrect" });
     }
   };
 
+  useEffect(() => {
+    if (response) console.log(response.message);
+
+  }, [response])
 
 
   return (
@@ -82,6 +99,7 @@ export function Login() {
           </label>
           <input type="submit" value="Se connecter" />
         </form>
+        {response?.message && <p>{response.message}</p>}
       </div>
     </div>
   )

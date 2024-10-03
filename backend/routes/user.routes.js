@@ -11,7 +11,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 router.get("/", getUsers);
-router.get("/:id", getUser);
+router.get("/:id", auth, getUser);
 router.post("/", setUser);
 router.put("/:id", editUser);
 router.delete("/:id", deleteUser);

@@ -8,13 +8,17 @@ module.exports.getUsers = async (req, res) => {
 };
 
 module.exports.getUser = async (req, res) => {
-  const user = await UserModel.findById(req.params.id);
+  try {
+    const user = await UserModel.findById(req.params.id);
 
-  if (!user) {
-    res.status(400).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-
-  res.status(200).json(user);
 };
 
 module.exports.setUser = async (req, res) => {
@@ -78,33 +82,36 @@ module.exports.deleteUser = async (req, res) => {
 };
 
 module.exports.loginUser = async (req, res) => {
-  const user = await UserModel.findOne({ email: req.body.email });
-
-  if (!user) {
-    res
-      .status(400)
-      .json({ message: "Email or password provided is incorrect" });
-  }
-
   try {
-    let comparePassword = await bcrypt.compare(
+    const user = await UserModel.findOne({ email: req.body.email });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Email or password provided is incorrect" });
+    }
+
+    const comparePassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
 
     if (!comparePassword) {
-      res
+      return res
         .status(400)
         .json({ message: "Email or password provided is incorrect" });
-    } else {
-      res.status(200).json({
-        userId: user._id,
-        token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
-          expiresIn: "24h",
-        }),
-      });
     }
+
+    return res.status(200).json({
+      userId: user._id,
+      token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+        expiresIn: "24h",
+      }),
+      message: "Login successful!",
+    });
   } catch (err) {
-    console.log(err.message);
+    return res
+      .status(500)
+      .json({ message: "An error occurred. Please try again later." });
   }
 };

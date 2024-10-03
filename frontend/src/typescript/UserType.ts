@@ -1,3 +1,10 @@
+export type UserType = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+};
+
 export type CreateUserType = {
   firstname: string;
   lastname: string;
