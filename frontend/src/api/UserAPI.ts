@@ -57,6 +57,7 @@ export async function getUser(id: String): Promise<UserType> {
       firstname: "undefined",
       lastname: "undefined",
       email: "undefined",
+      admin: false,
     };
   }
 }

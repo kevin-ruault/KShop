@@ -47,6 +47,7 @@ export function Login() {
       if (res.token) {
         localStorage.setItem("token", res.token);
         localStorage.setItem("userId", res.userId);
+        localStorage.setItem("admin", res.admin);
       }
       setResponse(res);
       navigate("/");

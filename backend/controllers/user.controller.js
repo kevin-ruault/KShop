@@ -107,6 +107,7 @@ module.exports.loginUser = async (req, res) => {
       token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
         expiresIn: "24h",
       }),
+      admin: user.admin,
       message: "Login successful!",
     });
   } catch (err) {

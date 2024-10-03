@@ -3,6 +3,7 @@ export type UserType = {
   firstname: string;
   lastname: string;
   email: string;
+  admin: boolean;
 };
 
 export type CreateUserType = {
@@ -15,4 +16,9 @@ export type CreateUserType = {
 export type LogUserType = {
   email: string;
   password: string;
+};
+
+export type UserContextType = {
+  user: UserType | undefined;
+  setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>;
 };
