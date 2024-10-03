@@ -9,6 +9,7 @@ import { ProductsContextProvider } from './context/ProductsContext';
 
 import './App.scss';
 import { UpdateProduct } from './components/UpdateProduct';
+import { Login } from './components/Login';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,15 @@ const router = createBrowserRouter([
             path: ":id",
             element: <UpdateProduct />
           }
+        ]
+      },
+      {
+        path: 'login',
+        children: [
+          {
+            path: "",
+            element: <Login />
+          },
         ]
       }
     ]

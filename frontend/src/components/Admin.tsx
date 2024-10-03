@@ -8,7 +8,6 @@ export function Admin() {
   const { products, setProducts } = useContext(ProductsContext);
   const location = useLocation();
 
-
   function handleDelete(id: String) {
     deleteProduct(id).then(() => {
       setProducts((prevProducts) => prevProducts.filter(product => product._id !== id));
