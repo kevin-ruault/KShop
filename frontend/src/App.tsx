@@ -11,7 +11,6 @@ import './App.scss';
 import { UpdateProduct } from './components/UpdateProduct';
 import { Login } from './components/Login';
 import { Profile } from './components/Profile';
-import { UserContextProvider } from './context/UserContext';
 
 const router = createBrowserRouter([
   {
@@ -63,11 +62,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <UserContextProvider>
-      <ProductsContextProvider>
-        <RouterProvider router={router} />
-      </ProductsContextProvider>
-    </UserContextProvider>
+    <ProductsContextProvider>
+      <RouterProvider router={router} />
+    </ProductsContextProvider>
   )
 }
 

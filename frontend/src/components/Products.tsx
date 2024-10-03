@@ -8,7 +8,7 @@ export function Products() {
 
   useEffect(() => {
     fetchUpdatedProducts(setProducts);
-  }, [products])
+  }, [])
 
   return (
     <ul>
