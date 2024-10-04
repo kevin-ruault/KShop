@@ -62,7 +62,6 @@ export async function createProduct(form: CreateProductType) {
 }
 
 export async function updateProduct(form: UpdateProductType, id: string) {
-  console.log(id, form);
   try {
     const formData = new FormData();
 

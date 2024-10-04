@@ -24,7 +24,6 @@ module.exports.getUser = async (req, res) => {
 
 module.exports.setUser = async (req, res) => {
   try {
-    console.log(req.body);
     let hashedpassword = await bcrypt.hash(
       req.body.password,
       await bcrypt.genSalt(10)
