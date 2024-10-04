@@ -46,13 +46,19 @@ export function Cart() {
             {cart.products.map((item, index) => (
               <li key={index}>
                 <p>{item.product.title}</p>
+                <p>{item.product.price} €</p>
+                {item.product.stock === 0 ?
+                  <p>Ce produit n'est plus en stock</p>
+                  :
+                  <p>Encore {item.product.stock} en stock</p>
+                }
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "16px" }}
                 >
                   <p>Quantité :</p>
                   <button onClick={() => handleRemove(item.product._id)}>-</button>
                   <p>{item.quantity.toString()}</p>
-                  <button onClick={() => handleAdd(item.product._id)}>
+                  <button disabled={item.product.stock === item.quantity ? true : false} onClick={() => handleAdd(item.product._id)}>
                     +
                   </button>
                 </div>
