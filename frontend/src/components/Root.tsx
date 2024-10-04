@@ -36,6 +36,7 @@ export function Root() {
         ) : (
           <>
             {adminUser && <NavLink to="/admin">Admin</NavLink>}
+            <NavLink to={`/cart`}>Panier</NavLink>
             <NavLink to={`/profile/${userId}`}>Profile</NavLink>
             <button onClick={handleLogout}>Se déconnecter</button>
           </>

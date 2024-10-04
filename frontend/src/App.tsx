@@ -11,6 +11,7 @@ import './App.scss';
 import { UpdateProduct } from './components/UpdateProduct';
 import { Login } from './components/Login';
 import { Profile } from './components/Profile';
+import { Cart } from './components/Cart';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: 'profile/:id',
         element: <Profile />
+      },
+      {
+        path: 'cart/',
+        element: <Cart />
       },
     ]
   }
