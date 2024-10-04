@@ -105,35 +105,29 @@ module.exports.deleteProduct = async (req, res) => {
 
     await ProductModel.findByIdAndDelete(productId);
 
-    // Trouver tous les paniers contenant ce produit
     const carts = await CartModel.find({ "products.product_id": productId });
 
     for (const cart of carts) {
-      // Filtrer les produits qui ne sont pas le produit supprimé
       const previousProducts = cart.products.filter(
         (item) => item.product_id.toString() === productId
       );
 
-      // Si le produit supprimé était présent, on calcule son prix
       const productPrice = previousProducts.reduce(
         (total, item) => total + item.quantity * product.price,
         0
       );
 
-      // Filtrer les produits restants dans le panier
       cart.products = cart.products.filter(
         (item) => item.product_id.toString() !== productId
       );
 
-      // Recalculer le prix total du panier
       cart.total_price = cart.products.reduce((total, item) => {
-        return total + item.price * item.quantity; // Assurez-vous que le prix est accessible ici
+        return total + item.price * item.quantity;
       }, 0);
 
-      // Si le produit supprimé était dans le panier, retirer son prix du total
       cart.total_price -= productPrice;
 
-      await cart.save(); // Sauvegarde les modifications du panier
+      await cart.save();
     }
 
     res.status(200).json({ message: "Produit et paniers mis à jour" });
