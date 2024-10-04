@@ -1,4 +1,5 @@
 const UserModel = require("../models/user.model");
+const CartModel = require("../models/cart.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -23,6 +24,7 @@ module.exports.getUser = async (req, res) => {
 
 module.exports.setUser = async (req, res) => {
   try {
+    console.log(req.body);
     let hashedpassword = await bcrypt.hash(
       req.body.password,
       await bcrypt.genSalt(10)
@@ -35,14 +37,22 @@ module.exports.setUser = async (req, res) => {
       password: hashedpassword,
     });
 
-    res.status(200).json(user);
+    const cart = await CartModel.create({
+      user_id: user._id,
+      products: [],
+      total_price: 0,
+    });
+
+    res.status(200).json({ user, cart });
   } catch (err) {
     if (err.code === 11000) {
       return res.status(400).json({ message: "Email already exists" });
     }
 
     console.error(err.message);
-    return res.status(500).json({ message: "An error occurred" });
+    return res
+      .status(500)
+      .json({ message: "An error occurred while creating the user or cart" });
   }
 };
 

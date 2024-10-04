@@ -2,14 +2,20 @@ import { useEffect, useState } from "react";
 import { ProductType } from "../typescript/ProductType";
 import { useParams } from "react-router-dom";
 import { getProduct } from "../api/ProductsAPI";
+import { addToCart } from "../api/CartAPI";
 
 export function Product() {
   const [product, setProduct] = useState<ProductType>();
   const { id } = useParams();
+  const token = localStorage.getItem('token');
 
-  function handleCartClick() {
-    console.log("ajouter au panier")
-  }
+  const handleAddToCart = () => {
+    if (token && product) {
+      addToCart(product._id, token);
+    } else {
+      alert("Vous devez être connecté pour ajouter au panier");
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -36,7 +42,7 @@ export function Product() {
         <p>{product.description}</p>
         <p><strong>Price:</strong> ${product.price}</p>
         <p><strong>Stock:</strong> {product.stock} items left</p>
-        <button onClick={handleCartClick}>Ajouter au panier</button>
+        <button onClick={handleAddToCart}>Ajouter au panier</button>
       </div>
     </div>
   );
