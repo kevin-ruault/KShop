@@ -27,6 +27,7 @@ export async function getProduct(id: String): Promise<ProductType> {
       description: "undefined",
       price: 0,
       stock: 0,
+      disable: false,
     };
   }
 }
@@ -69,6 +70,7 @@ export async function updateProduct(form: UpdateProductType, id: string) {
     formData.append("description", form.description);
     formData.append("price", form.price.toString());
     formData.append("stock", form.stock.toString());
+    formData.append("disable", form.disable.toString());
 
     if (form.image) {
       formData.append("image", form.image);

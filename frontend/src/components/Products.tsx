@@ -12,11 +12,13 @@ export function Products() {
 
   return (
     <ul>
-      {products.map((product) => (
-        <li key={product._id}>
-          <NavLink to={product._id}>{product.title}</NavLink>
-        </li>
-      ))}
+      {products
+        .filter((product) => product.disable)
+        .map((product) => (
+          <li key={product._id}>
+            <NavLink to={product._id}>{product.title}</NavLink>
+          </li>
+        ))}
     </ul>
   );
 }

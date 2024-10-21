@@ -10,6 +10,7 @@ export function UpdateProduct() {
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState(0)
   const [stock, setStock] = useState(0)
+  const [disable, setDisable] = useState(false)
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export function UpdateProduct() {
       description,
       price,
       stock,
+      disable,
     };
 
     if (image) {
@@ -59,6 +61,7 @@ export function UpdateProduct() {
           setDescription(productData.description);
           setPrice(productData.price);
           setStock(productData.stock);
+          setDisable(productData.disable);
           setPreview(productData.imagePath ? `http://localhost:5000/${productData.imagePath}` : null);
         }
       }
@@ -90,6 +93,13 @@ export function UpdateProduct() {
         <label>
           Quantité :
           <input pattern="[0-9]*" value={stock} onChange={(e) => setStock(Number(e.target.value))} required={true} />
+        </label>
+        <label>
+          Disponibilité :
+          <input type="checkbox" defaultChecked={disable} readOnly={false} onClick={() => {
+            setDisable(!disable)
+            console.log(disable)
+          }} />
         </label>
         <label>
           Image:

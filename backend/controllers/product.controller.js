@@ -67,6 +67,8 @@ module.exports.editProduct = async (req, res) => {
     product.stock =
       req.body.stock !== undefined ? req.body.stock : product.stock;
     product.imagePath = imagePath;
+    product.disable =
+      req.body.disable !== undefined ? req.body.disable : product.disable;
 
     await product.save();
 

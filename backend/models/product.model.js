@@ -21,6 +21,10 @@ const productSchema = mongoose.Schema(
     imagePath: {
       type: String,
     },
+    disable: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

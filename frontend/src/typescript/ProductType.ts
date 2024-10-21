@@ -4,6 +4,7 @@ export type ProductType = {
   description: string;
   price: number;
   stock: number;
+  disable: boolean;
   imagePath?: string;
 };
 
@@ -20,6 +21,7 @@ export type UpdateProductType = {
   description: string;
   price: number;
   stock: number;
+  disable: boolean;
   image?: File | null;
 };
 
