@@ -18,6 +18,19 @@ module.exports.getProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
+module.exports.getProductById = async (productId) => {
+  try {
+    const product = await ProductModel.findById(productId);
+    if (!product) {
+      throw new Error("Produit introuvable");
+    }
+    return product;
+  } catch (error) {
+    console.error("Erreur lors de la récupération du produit par ID :", error);
+    throw error;
+  }
+};
+
 module.exports.setProduct = async (req, res) => {
   try {
     const imagePath = req.file
