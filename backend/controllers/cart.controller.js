@@ -2,6 +2,11 @@ const CartModel = require("../models/cart.model");
 const ProductModel = require("../models/product.model");
 
 module.exports.getCarts = async (req, res) => {
+  const user = await UserModel.findOne(req.auth.userId);
+
+  if (!user.admin) {
+    res.status(400).json({ message: "L'utilisateur n'est pas administrateur" });
+  }
   const carts = await CartModel.find();
   res.status(200).json(carts);
 };

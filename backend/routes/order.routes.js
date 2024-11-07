@@ -8,7 +8,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 router.get("/", auth, getOrders);
-router.get("/:id", auth, getOrdersByCustomer);
+router.get("/order", auth, getOrdersByCustomer);
 router.post("/", auth, setOrder);
 
 module.exports = router;

@@ -9,7 +9,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 router.get("/cart", auth, getCart);
-router.get("/", getCarts);
+router.get("/", auth, getCarts);
 router.put("/add", auth, addProductToCart);
 router.put("/remove", auth, removeProductFromCart);
 

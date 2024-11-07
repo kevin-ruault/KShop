@@ -14,14 +14,24 @@ module.exports.getOrders = async (req, res) => {
 };
 
 module.exports.getOrdersByCustomer = async (req, res) => {
-  const userId = req.params.id;
-  const orders = await OrderModel.findAll({
-    where: {
-      user_id: userId,
-    },
-  });
+  try {
+    const userId = req.auth.userId.toString();
+    const query = { user_id: userId };
+    const orders = await OrderModel.find(query);
 
-  res.status(200).json(orders);
+    if (!orders) {
+      return res
+        .status(404)
+        .json({ message: "Commande(s) introuvable(s) pour cet utilisateur" });
+    }
+
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la récupération de(s) commande(s)" });
+  }
 };
 
 module.exports.setOrder = async (req, res) => {
